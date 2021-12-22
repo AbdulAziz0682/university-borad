@@ -17,5 +17,5 @@ export default function AllRoutes() {
         <Route index element={<Home />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
