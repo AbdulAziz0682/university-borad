@@ -12,10 +12,12 @@ import Topbar from '../topbar';
 export default function AllRoutes() {
   return (
     <BrowserRouter>
-      <Topbar />
-      <Routes>
-        <Route index element={<Home />} />
-      </Routes>
+      <div className="w-screen h-screen">
+        <Topbar />
+        <Routes>
+          <Route index element={<Home />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }
