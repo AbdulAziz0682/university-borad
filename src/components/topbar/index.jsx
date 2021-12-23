@@ -5,41 +5,75 @@ import {
 } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 import Container from '../shared/Container';
 import Row from '../shared/Row';
-import Col from '../shared/Col';
+import Accordian from '../shared/Accordian';
 
 export default function Topbar() {
+  const [isMobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const mobileMenus = [
+    {
+      summary: 'For Institutions',
+      details: 'Inst',
+    },
+    {
+      summary: 'For Consultants',
+      details: 'Cons',
+    },
+    {
+      summary: 'For Students',
+      details: 'Stds',
+    },
+    {
+      summary: 'For Governments',
+      details: 'Inst',
+    },
+    {
+      summary: 'High Scools',
+      details: 'schools',
+    },
+    {
+      summary: 'Events',
+      details: 'events',
+    },
+  ];
   return (
     <>
       <div className="relative inset-x-0 text-xs text-white bg-primary">
         <Container className="max-w-screen-xl px-5 py-3">
           <Row className="flex-col items-center gap-2 md:flex-row">
-            <Col className="self-end md:hidden">
-              <p className="font-semibold uppercase cursor-pointer">
-                Menu&nbsp;
-                <FontAwesomeIcon icon={faBars} />
+            <p className="self-end font-semibold uppercase cursor-pointer" aria-hidden onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
+              Menu&nbsp;
+              <FontAwesomeIcon icon={faBars} />
+            </p>
+            {
+              isMobileMenuOpen && mobileMenus.map((menu) => (
+                <Accordian
+                  summary={menu.summary}
+                  closedIcon={<FontAwesomeIcon icon={faCaretRight} />}
+                  openedIcon={<FontAwesomeIcon icon={faCaretDown} />}
+                  details={menu.details}
+                  classes={{ summary: 'gap-3' }}
+                />
+              ))
+            }
+            <Row className="flex-col items-center justify-between gap-3 md:flex-row">
+              <p className="text-sm cursor-pointer hover:text-yellow-400">
+                Click here for&nbsp;
+                <span className="font-bold uppercase">Global Education News</span>
               </p>
-            </Col>
-            <Col>
-              <Row className="flex-col items-center justify-between gap-3 md:flex-row">
-                <p className="cursor-pointer hover:text-yellow-400">
-                  Click here for&nbsp;
-                  <span className="font-bold uppercase">Global Education News</span>
-                </p>
-                <ul className="gap-2.5 uppercase list-none flex">
-                  {
-                    ['home', 'about', 'testimonials', 'contact', 'social'].map((item) => (
-                      <li className="hover:text-yellow-400" key={item}>
-                        <Link to={`/${item}`}>{item}</Link>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </Row>
-            </Col>
+              <ul className="flex gap-2 uppercase list-none">
+                {
+                  ['home', 'about', 'testimonials', 'contact', 'social'].map((item) => (
+                    <li className="hover:text-yellow-400" key={item}>
+                      <Link to={`/${item}`}>{item}</Link>
+                    </li>
+                  ))
+                }
+              </ul>
+            </Row>
           </Row>
         </Container>
       </div>
